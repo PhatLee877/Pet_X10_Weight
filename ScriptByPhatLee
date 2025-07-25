@@ -13,7 +13,7 @@ screenGui.Parent = playerGui
 
 -- Tạo Frame ở giữa màn hình
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0.4, 0, 0.15, 0)
+frame.Size = UDim2.new(0.45, 0, 0.2, 0)
 frame.Position = UDim2.new(0.5, 0, 0.5, 0)
 frame.AnchorPoint = Vector2.new(0.5, 0.5)
 frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -21,19 +21,31 @@ frame.BackgroundTransparency = 0.1
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
 
--- Giao diện viền bo
+-- Viền bo góc
 local uicorner = Instance.new("UICorner")
 uicorner.CornerRadius = UDim.new(0, 12)
 uicorner.Parent = frame
 
--- Dòng chữ cảnh báo
-local label = Instance.new("TextLabel")
-label.Size = UDim2.new(1, -20, 1, -20)
-label.Position = UDim2.new(0.5, 0, 0.5, 0)
-label.AnchorPoint = Vector2.new(0.5, 0.5)
-label.BackgroundTransparency = 1
-label.Text = "Script isn't working right now!"
-label.TextColor3 = Color3.fromRGB(255, 100, 100)
-label.TextScaled = true
-label.Font = Enum.Font.GothamBold
-label.Parent = frame
+-- Label chính
+local mainLabel = Instance.new("TextLabel")
+mainLabel.Size = UDim2.new(1, -20, 0.6, -10)
+mainLabel.Position = UDim2.new(0.5, 0, 0.3, 0)
+mainLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+mainLabel.BackgroundTransparency = 1
+mainLabel.Text = "script isn't working right now,\nwait for updates"
+mainLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+mainLabel.TextScaled = true
+mainLabel.Font = Enum.Font.GothamBold
+mainLabel.Parent = frame
+
+-- Label phụ (credit)
+local creditLabel = Instance.new("TextLabel")
+creditLabel.Size = UDim2.new(1, -20, 0.3, 0)
+creditLabel.Position = UDim2.new(0.5, 0, 0.85, 0)
+creditLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+creditLabel.BackgroundTransparency = 1
+creditLabel.Text = "-Script By PhatLee-"
+creditLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+creditLabel.TextScaled = true
+creditLabel.Font = Enum.Font.Gotham
+creditLabel.Parent = frame
