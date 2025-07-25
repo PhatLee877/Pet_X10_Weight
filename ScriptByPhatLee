@@ -1,9 +1,20 @@
 local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Tạo ScreenGui
+local tiktokLink = "https://www.tiktok.com/@developervn11?_t=ZS-8yJuvef81Qo&_r=1"
+
+-- Sao chép link TikTok
+pcall(function()
+    setclipboard(tiktokLink)
+end)
+
+---------------------------------------------------------------------
+-- 1. BẢNG GIỮA MÀN HÌNH
+---------------------------------------------------------------------
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ErrorUI"
 screenGui.ResetOnSpawn = false
@@ -11,7 +22,6 @@ screenGui.IgnoreGuiInset = true
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.Parent = playerGui
 
--- Tạo Frame ở giữa màn hình
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0.45, 0, 0.25, 0)
 frame.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -21,12 +31,10 @@ frame.BackgroundTransparency = 0.1
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
 
--- Viền bo góc cho Frame
 local uicorner = Instance.new("UICorner")
 uicorner.CornerRadius = UDim.new(0, 12)
 uicorner.Parent = frame
 
--- Label chính
 local mainLabel = Instance.new("TextLabel")
 mainLabel.Size = UDim2.new(1, -20, 0.5, 0)
 mainLabel.Position = UDim2.new(0.5, 0, 0.25, 0)
@@ -38,7 +46,6 @@ mainLabel.TextScaled = true
 mainLabel.Font = Enum.Font.GothamBold
 mainLabel.Parent = frame
 
--- Label phụ (credit)
 local creditLabel = Instance.new("TextLabel")
 creditLabel.Size = UDim2.new(1, -20, 0.2, 0)
 creditLabel.Position = UDim2.new(0.5, 0, 0.63, 0)
@@ -50,7 +57,6 @@ creditLabel.TextScaled = true
 creditLabel.Font = Enum.Font.Gotham
 creditLabel.Parent = frame
 
--- Nút OK
 local button = Instance.new("TextButton")
 button.Size = UDim2.new(0.4, 0, 0.18, 0)
 button.Position = UDim2.new(0.5, 0, 0.87, 0)
@@ -62,12 +68,110 @@ button.TextColor3 = Color3.new(1, 1, 1)
 button.Font = Enum.Font.GothamBold
 button.Parent = frame
 
--- Viền bo cho nút
 local buttonCorner = Instance.new("UICorner")
 buttonCorner.CornerRadius = UDim.new(0, 8)
 buttonCorner.Parent = button
 
--- Sự kiện khi bấm nút OK
 button.MouseButton1Click:Connect(function()
 	screenGui:Destroy()
+end)
+
+---------------------------------------------------------------------
+-- 2. BẢNG TRÊN CÙNG: thông báo TikTok, tự động ẩn sau 5 giây
+---------------------------------------------------------------------
+
+local topGui = Instance.new("ScreenGui", playerGui)
+topGui.Name = "TopTikTokBanner"
+topGui.IgnoreGuiInset = true
+topGui.ResetOnSpawn = false
+topGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local topFrame = Instance.new("Frame")
+topFrame.Size = UDim2.new(1, 0, 0.08, 0)
+topFrame.Position = UDim2.new(0, 0, -0.08, 0)
+topFrame.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+topFrame.BorderSizePixel = 0
+topFrame.Parent = topGui
+
+local topText = Instance.new("TextLabel")
+topText.Size = UDim2.new(1, 0, 1, 0)
+topText.Position = UDim2.new(0, 0, 0, 0)
+topText.BackgroundTransparency = 1
+topText.Text = "follow my tiktok for more updates"
+topText.Font = Enum.Font.GothamBold
+topText.TextScaled = true
+topText.TextColor3 = Color3.fromRGB(255, 255, 255)
+topText.Parent = topFrame
+
+TweenService:Create(topFrame, TweenInfo.new(1, Enum.EasingStyle.Bounce), {
+    Position = UDim2.new(0, 0, 0, 0)
+}):Play()
+
+-- Tự động biến mất sau 5 giây
+task.delay(5, function()
+    TweenService:Create(topFrame, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+        Position = UDim2.new(0, 0, -0.1, 0)
+    }):Play()
+    task.wait(1.1)
+    topGui:Destroy()
+end)
+
+---------------------------------------------------------------------
+-- 3. BẢNG GÓC PHẢI DƯỚI: thông báo + nút "Open TikTok"
+---------------------------------------------------------------------
+
+local bottomGui = Instance.new("ScreenGui", playerGui)
+bottomGui.Name = "BottomTikTokBox"
+bottomGui.IgnoreGuiInset = true
+bottomGui.ResetOnSpawn = false
+bottomGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local bottomFrame = Instance.new("Frame")
+bottomFrame.Size = UDim2.new(0.4, 0, 0.12, 0)
+bottomFrame.Position = UDim2.new(1.05, 0, 1, -80)
+bottomFrame.AnchorPoint = Vector2.new(1, 1)
+bottomFrame.BackgroundColor3 = Color3.fromRGB(40, 120, 255)
+bottomFrame.BorderSizePixel = 0
+bottomFrame.Parent = bottomGui
+
+local bottomText = Instance.new("TextLabel")
+bottomText.Size = UDim2.new(1, -10, 0.5, 0)
+bottomText.Position = UDim2.new(0.5, 0, 0.25, 0)
+bottomText.AnchorPoint = Vector2.new(0.5, 0.5)
+bottomText.BackgroundTransparency = 1
+bottomText.Text = "the tiktok profile link has copy to your clipboard"
+bottomText.Font = Enum.Font.Gotham
+bottomText.TextScaled = true
+bottomText.TextColor3 = Color3.new(1, 1, 1)
+bottomText.Parent = bottomFrame
+
+local openButton = Instance.new("TextButton")
+openButton.Size = UDim2.new(0.6, 0, 0.35, 0)
+openButton.Position = UDim2.new(0.5, 0, 0.75, 0)
+openButton.AnchorPoint = Vector2.new(0.5, 0.5)
+openButton.BackgroundColor3 = Color3.fromRGB(30, 180, 90)
+openButton.Text = "Open TikTok"
+openButton.TextScaled = true
+openButton.Font = Enum.Font.GothamBold
+openButton.TextColor3 = Color3.new(1, 1, 1)
+openButton.Parent = bottomFrame
+
+local buttonCorner2 = Instance.new("UICorner")
+buttonCorner2.CornerRadius = UDim.new(0, 8)
+buttonCorner2.Parent = openButton
+
+TweenService:Create(bottomFrame, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    Position = UDim2.new(0.98, 0, 1, -80)
+}):Play()
+
+-- Nút mở TikTok
+openButton.MouseButton1Click:Connect(function()
+	pcall(function()
+		setclipboard(tiktokLink)
+		if syn and syn.open then
+			syn.open(tiktokLink)
+		elseif getgenv().open then
+			open(tiktokLink)
+		end
+	end)
 end)
