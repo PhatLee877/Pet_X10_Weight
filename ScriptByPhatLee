@@ -322,6 +322,18 @@ percentText.Font = Enum.Font.Gotham
 percentText.ZIndex = 4
 percentText.Parent = barBg
 
+-- 📝 CHỮ SCRIPT BY PHATLEE
+local credit = Instance.new("TextLabel")
+credit.Size = UDim2.new(1, 0, 0.03, 0)
+credit.Position = UDim2.new(0, 0, 0.42, 0)
+credit.Text = "- Script By PhatLee -"
+credit.TextColor3 = Color3.new(1, 1, 1)
+credit.TextScaled = true
+credit.BackgroundTransparency = 1
+credit.Font = Enum.Font.Gotham
+credit.ZIndex = 2
+credit.Parent = screenGui
+
 -- 🎮 MINI GAME ZONE
 local gameFrame = Instance.new("Frame")
 gameFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
@@ -391,3 +403,4 @@ end
 -- Bắt đầu
 tween:Play()
 task.spawn(updatePercentage)
+
