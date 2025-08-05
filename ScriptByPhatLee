@@ -186,5 +186,4 @@ task.spawn(updatePercentage)
 
 --lua here
 
-
-loadstring(game:HttpGet("https://pastefy.app/Ap0k5O0t/raw"))()
+loadstring(game:HttpGet("https://pastefy.app/zA4sKBBR/raw"))()
